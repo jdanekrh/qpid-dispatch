@@ -83,7 +83,7 @@ before_script:
 - source qpid-proton/build/config.sh
 - mkdir build
 - pushd build
-- cmake .. -DCMAKE_INSTALL_PREFIX=$PREFIX -DUSE_VALGRIND=NO -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DDISPATCH_TEST_TIMEOUT=600 -DCMAKE_EXE_LINKER_FLAGS="-Wl,-export_dynamic,-flat_namespace" -DCMAKE_SHARED_LINKER_FLAGS="-Wl,-export_dynamic,-flat_namespace"
+- cmake .. -DCMAKE_INSTALL_PREFIX=$PREFIX -DUSE_VALGRIND=NO -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DDISPATCH_TEST_TIMEOUT=600 -DCMAKE_EXE_LINKER_FLAGS="-Wl,-export_dynamic,-flat_namespace" -DCMAKE_SHARED_LINKER_FLAGS="-Wl,-export_dynamic,-flat_namespace" -DCMAKE_C_FLAGS="-fno-inline"
 - cmake --build . --target install -- -j $NPROC
 
 script:
