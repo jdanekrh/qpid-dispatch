@@ -73,7 +73,7 @@ endif()
 # Find python-unittest2
 execute_process(COMMAND "${PYTHON_EXECUTABLE}" "-c" "import unittest2"
 			RESULT_VARIABLE UNITTEST2_MISSING
-			ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
+			OUTPUT_STRIP_TRAILING_WHITESPACE)
 enable_testing()
 if(UNITTEST2_MISSING)
   message(STATUS "WARNING: python-unittest2 is not installed. ***unit tests cannot be run***" )
