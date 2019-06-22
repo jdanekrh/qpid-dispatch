@@ -109,7 +109,7 @@ class RouterTestBadConfiguration(TestCase):
         """
         with open('../setUpClass/test-router.log', 'r') as router_log:
             log_lines = router_log.read().split("\n")
-            regex = ".*(getaddrinfo|proton:io Name or service not known).*"
+            regex = ".*(getaddrinfo|proton:io (Name or service not known|unknown node or service)).*"
             errors_caught = [line for line in log_lines if re.match(regex, line)]
 
             self.error_caught = len(errors_caught) > 0
