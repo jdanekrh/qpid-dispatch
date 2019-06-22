@@ -80,7 +80,7 @@ if(PYTHON_VERSION_MAJOR EQUAL 2 AND PYTHON_VERSION_MINOR LESS 7)
   set(PYTHON_TEST_COMMAND "unit2")
   execute_process(COMMAND "${PYTHON_EXECUTABLE}" "-c" "import unittest2"
                   RESULT_VARIABLE UNITTEST_MISSING
-                  OUTPUT_STRIP_TRAILING_WHITESPACE)
+                  ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
 
   if(UNITTEST_MISSING)
     message(WARNING "python-unittest2 is not installed. ***unit tests cannot be run***\ntry 'pip install python-unittest2' to install python-unittest2")
