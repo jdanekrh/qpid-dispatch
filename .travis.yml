@@ -38,7 +38,7 @@ matrix:
   - os: osx
     osx_image: xcode10.1
     env:
-    - PATH="/opt/local/bin:/opt/local/sbin:/usr/local/bin:$PATH" PROTON_VERSION=master
+    - PATH="/usr/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:$PATH" PROTON_VERSION=master
     before_install:
     - bash ./macports.sh
     - export COLUMNS=80
