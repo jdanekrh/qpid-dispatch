@@ -21,20 +21,8 @@ sudo: true
 language: c
 cache: ccache
 matrix:
-  fast_finish: true
-  allow_failures:
-    - os: osx
   include:
   # prepending /usr/bin to PATH to avoid mismatched python interpreters in /opt
-  - os: linux
-    env:
-    - PATH="/usr/bin:$PATH" PROTON_VERSION=master BUILD_TYPE=Debug
-  - os: linux
-    env:
-    - PATH="/usr/bin:$PATH" PROTON_VERSION=0.29.0 BUILD_TYPE=Coverage
-  - os: linux
-    env:
-    - PATH="/usr/bin:$PATH" PROTON_VERSION=0.29.0 BUILD_TYPE=RelWithDebInfo
   - os: osx
     osx_image: xcode10.1
     env:
