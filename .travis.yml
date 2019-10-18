@@ -45,17 +45,27 @@ matrix:
   # prepending /usr/bin to PATH to avoid mismatched python interpreters in /opt
   - os: linux
     env:
-    - PATH="/usr/bin:$PATH" PROTON_VERSION=master BUILD_TYPE=Debug
+    - PROTON_VERSION=master
+    - BUILD_TYPE=Debug
+    - PATH="/usr/bin:$PATH"
   - os: linux
     env:
-    - PATH="/usr/bin:$PATH" PROTON_VERSION=0.29.0 BUILD_TYPE=Coverage
+    - PROTON_VERSION=0.29.0
+    - BUILD_TYPE=Coverage
+    - PATH="/usr/bin:$PATH"
   - os: linux
     env:
-    - PATH="/usr/bin:$PATH" PROTON_VERSION=0.29.0 BUILD_TYPE=RelWithDebInfo
+    - PROTON_VERSION=0.29.0
+    - BUILD_TYPE=RelWithDebInfo
+    - PATH="/usr/bin:$PATH"
   - os: osx
-    osx_image: xcode10.1
+    osx_image: xcode10.3
     env:
-    - PATH="/opt/local/bin:/opt/local/sbin:/usr/local/bin:$PATH" PROTON_VERSION=master
+    - PROTON_VERSION=master
+    # use MacPorts binaries and libs
+    - PATH="/opt/local/bin:/opt/local/sbin:/usr/local/bin:$PATH"
+    - CMAKE_INCLUDE_PATH=/opt/local/include
+    - CMAKE_LIBRARY_PATH=/opt/local/lib
     before_install:
     - bash ./macports.sh
     - export COLUMNS=80
@@ -66,6 +76,24 @@ matrix:
     - python -m venv p3venv
     - source p3venv/bin/activate
     - pip install unittest2
+  - os: osx
+    osx_image: xcode11.2
+    env:
+      - PROTON_VERSION=master
+      # use MacPorts binaries and libs
+      - PATH="/opt/local/bin:/opt/local/sbin:/usr/local/bin:$PATH"
+      - CMAKE_INCLUDE_PATH=/opt/local/include
+      - CMAKE_LIBRARY_PATH=/opt/local/lib
+    before_install:
+      - bash ./macports.sh
+      - export COLUMNS=80
+      - yes | sudo port install cmake swig swig-python libuv jsoncpp libwebsockets cyrus-sasl2 pkgconfig python37 py37-pip
+      # set aliases for CMake's PythonInterp and PythonLibs to find MacPort's `python` on the path first
+      - sudo port select --set python python37
+      - sudo port select --set python3 python37
+      - python -m venv p3venv
+      - source p3venv/bin/activate
+      - pip install unittest2
 
 addons:
   apt:
