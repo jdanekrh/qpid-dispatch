@@ -40,6 +40,7 @@ from proton.reactor import Container
 CONTAINER_ID = "org.apache.qpid.dispatch.test_core_client"
 TARGET_ADDR = "test_core_client_address"
 
+
 class CoreClientAPITest(TestCase):
     @classmethod
     def setUpClass(cls):
@@ -55,33 +56,33 @@ class CoreClientAPITest(TestCase):
     def test_send_receive(self):
         ts = TestService(self.router.addresses[0], credit=250)
         ts.run()
-        self.assertTrue(ts.error is None)
+        self.assertIsNone(ts.error)
         self.assertEqual(250, ts.in_count)
         self.assertEqual(250, ts.out_count)
 
     def test_credit_starve(self):
         ts = TestCreditStarve(self.router.addresses[0])
         ts.run()
-        self.assertTrue(ts.error is None)
+        self.assertIsNone(ts.error)
         self.assertTrue(ts.starved)
         self.assertEqual(10, ts.in_count)
 
     def test_unexpected_conn_close(self):
         ts = TestEarlyClose(self.router.addresses[0])
         ts.run()
-        self.assertTrue(ts.error is None)
-        self.assertTrue(ts.in_count >= 1)
+        self.assertIsNone(ts.error)
+        self.assertGreaterEqual(ts.in_count, 1)
 
     def test_bad_format(self):
         ts = TestNoCorrelationId(self.router.addresses[0])
         ts.run()
-        self.assertTrue(ts.error is None)
+        self.assertIsNone(ts.error)
         self.assertTrue(ts.rejected)
 
     def test_old_cid(self):
         ts = TestOldCorrelationId(self.router.addresses[0])
         ts.run()
-        self.assertTrue(ts.error is None)
+        self.assertIsNone(ts.error)
         self.assertTrue(ts.accepted)
 
     def test_call_timeout(self):
@@ -134,7 +135,6 @@ class TestService(MessagingHandler):
         if event.sender:
             if not link.remote_source.dynamic:
                 self.fail("expected dynamic source terminus")
-                return
             link.source.dynamic = False
             link.source.address = "a/reply/address"
             self.reply_link = link
@@ -167,7 +167,7 @@ class TestService(MessagingHandler):
         self._container.start()
         while self._container.process():
             if self._conn is None and self._container.quiesced:
-                break;
+                break
         self._container.stop()
         self._container.process()
 
