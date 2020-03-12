@@ -42,6 +42,8 @@ matrix:
     before_script: []
     script:
     - mvn apache-rat:check
+    after_failure:
+    - cat target/rat.txt
   # prepending /usr/bin to PATH to avoid mismatched python interpreters in /opt
   - os: linux
     env:
